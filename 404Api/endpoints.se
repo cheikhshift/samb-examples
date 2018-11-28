@@ -1,0 +1,53 @@
+# Routes' definition
+# Import Go packages with directive import
+# For example import "net/http";
+
+
+routes {
+    provide r;
+
+    route {
+	    method *;
+	    # Defines route path.
+	    # all sub routes have this path
+	    # prepended.
+	    path "/";
+
+	    # Provider variables
+	    # within scope of entire 
+	    # route.
+	    provide w;
+	    provide r;
+
+
+	    go {
+	    	do println("Hello");
+	    }
+
+	    route {
+	    	method GET;
+	    	path "Foo";
+
+	    	go {
+	    		# custom Go code to run
+	    		do println("Hello");
+	    	}
+
+	    	# Handler can be any function.
+	    	# Should be a function that handles the request
+	    	# response
+	    	handler fmt.Println("Hello");
+	    }
+
+
+	    # Placed to run last
+	    route {
+			path "";
+			method *;
+
+			handler pageNotFound(w);
+		}
+	}
+
+	
+}
