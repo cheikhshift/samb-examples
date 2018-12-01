@@ -1,0 +1,42 @@
+# Routes' definition
+# Import Go packages with directive import
+# For example import "net/http";
+
+
+routes {
+    provide r;
+
+    route {
+	    method *;
+	    # Defines route path.
+	    # all sub routes have this path
+	    # prepended.
+	    path "/";
+
+	    # Provider variables
+	    # within scope of entire 
+	    # route.
+	    provide w;
+	    provide r;
+
+
+	    go {
+			# Go Function will check for token
+			# in GET query of post body,
+			# if not found, the function will panic. 
+	    	do authenticate(w, r);
+	    }
+
+	    route {
+	    	method GET;
+	    	path "Foo";
+
+	    	# Handler generated
+			# with command `samb-handler -name=secureRes -verb=GET`
+	    	handler GETSecureRes(w,r);
+	    }
+
+
+
+	}
+}
