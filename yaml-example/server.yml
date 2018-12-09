@@ -1,0 +1,32 @@
+# Go package import path of your project.
+package: github.com/cheikhshift/samb-examples/yaml-example
+
+# import providers
+require: ["./providers.se"]
+
+
+# Globals are exported via package 
+# globals
+global:
+  - name: Foo
+    type : bool
+    # Adding comments to exported variable.
+    comment: Foo decides if a process should run
+    return : false
+  - name: AnotherVariable
+    type : bool
+    return: true
+
+server: 
+  host: 127.0.0.1
+  port: 8081
+  # Import web route definitions
+  require : ["./endpoints.yml"]
+
+  start:
+    do:
+      - println("HelloWorld")
+      - println("Starting...")
+
+
+

@@ -21,10 +21,9 @@ routes {
 
 
 	    go {
-		# Go Function will check for token
-		# in GET query or post body,
-		# if not found, the function will panic.
-		# recovery handler FooBar will catch said panic.
+			# Go Function will check for token
+			# in GET query of post body,
+			# if not found, the function will panic. 
 	    	do authenticate(w, r);
 	    }
 

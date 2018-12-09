@@ -1,0 +1,19 @@
+# SAMB endpoint declarations in YAML.
+routes:
+  provide: ["r"]
+  route :
+    - method : "*"
+      path : /Foo
+      route :
+        - method : GET
+          path : /Bar
+          handler : w.Write([]byte("Hello World"))
+    - method : GET
+      path : "/hello"
+      handler : w.Write([]byte("Hello World"))
+    - method : POST
+      path : "/hello_POST"
+      go :
+        do :
+          - println("Request to Hello_post")
+      handler: w.Write( []byte("Hello World") )
