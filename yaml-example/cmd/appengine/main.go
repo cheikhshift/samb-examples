@@ -2,15 +2,14 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
-	"time"
 
 	"github.com/cheikhshift/samb-examples/yaml-example/pkg/api"
 	"github.com/cheikhshift/samb-examples/yaml-example/pkg/hooks"
+	"google.golang.org/appengine"
 )
 
 func main() {
@@ -23,27 +22,18 @@ func main() {
 
 	http.HandleFunc("/", api.Handler)
 
-	h := &http.Server{Addr: host + ":" + port}
-
 	go func() {
 		<-stop
-		cleanUp(h)
+		cleanUp()
 	}()
 
-	err := h.ListenAndServe()
-	if err != nil {
-		log.Println(err)
-	}
-
+	// Launch app on appengine
+	appengine.Main()
 }
 
-func cleanUp(h *http.Server) {
-	log.Println("\nShutting down the server...")
-
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	h.Shutdown(ctx)
+func cleanUp() {
 
 	hooks.Stop()
-	log.Println("Server gracefully stopped")
+	log.Println("App gracefully stopped")
 
 }
