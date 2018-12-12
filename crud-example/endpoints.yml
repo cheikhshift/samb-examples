@@ -1,0 +1,16 @@
+# SAMB endpoint declarations in YAML.
+routes:
+  provide: ["r", "w"]
+  route :
+    - method : "*"
+      path : /shoes/
+      go :
+        do :
+          - w.Header().Set("Content-Type", "application/json")
+          - println(r.Method + " request to " + r.URL.Path)
+      # The handler is using variables introduced
+      # with providers. Providers r and w are builtin.
+      # r is your current request, with type *http.Request (from stdlib)
+      # w is your current request's response,
+      # with type http.ResponseWriter (from stdlib)
+      handler : HandleShoes(w, r)

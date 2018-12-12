@@ -1,0 +1,35 @@
+# Go package import path of your project.
+package: github.com/cheikhshift/samb-examples/crud-example
+
+
+# Globals are exported via package 
+# globals
+global:
+  - name: Client
+    type : "*mongo.Client"
+    # Adding comments to exported variable.
+    comment: Shared database res.
+    # The following function is in exported GO
+    # package globals.
+    return : LoadClient()
+
+server: 
+  host: 127.0.0.1
+  port: 8081
+  # Import web route definitions
+  require : ["./endpoints.yml"]
+
+  start:
+    do:
+      - println("Starting")
+  
+  recover:
+    do:
+      - jsonPanic
+
+  shutdown:
+    do:
+      - globals.CloseConnection()
+
+
+

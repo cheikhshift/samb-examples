@@ -4,10 +4,11 @@ routes:
   route :
     - method : "*"
       path : /Foo
+      handler : w.Write([]byte("Hello world"))
       route :
         - method : GET
           path : /Bar
-          handler : w.Write([]byte("Hello World"))
+          handler : w.Write([]byte(r.URL.Path))
     - method : GET
       path : "/hello"
       handler : w.Write([]byte("Hello World"))
