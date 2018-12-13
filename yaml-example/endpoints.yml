@@ -2,6 +2,9 @@
 routes:
   provide: ["r"]
   route :
+    - method : "GET"
+      path : /Foogazi
+      handler :  w.Write( []byte("Hello") )
     - method : "*"
       path : /Foo
       handler : w.Write([]byte("Hello world"))

@@ -14,6 +14,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	defer catchPanic(w, r)
 
+	if basePath := "/Foogazi"; strings.Contains(r.URL.Path, basePath) && r.Method == "GET" {
+
+		tools.ShortenPath(basePath, r)
+
+		w.Write([]byte("Hello"))
+		return
+	}
 	if basePath := "/Foo"; strings.Contains(r.URL.Path, basePath) {
 
 		if basePath := "/Foo/Bar"; strings.Contains(r.URL.Path, basePath) && r.Method == "GET" {
