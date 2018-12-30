@@ -3,9 +3,7 @@ routes:
   provide: ["r","w"]
   route :
     - method : "*"
-      path : /shoes/ # :ID
-      strict : true
-      require : [ "./nest_require_path.yml" ]
+      path : /shoes_sub/ # :ID
       go :
         do :
           - w.Header().Set("Content-Type", "application/json")

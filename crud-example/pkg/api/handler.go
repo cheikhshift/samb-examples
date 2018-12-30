@@ -14,11 +14,20 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	defer catchPanic(w, r)
 
-	if basePath := "/shoes/"; strings.Contains(r.URL.Path, basePath) {
-
-		tools.ShortenPath(basePath, r)
+	if basePath := "/shoes/"; r.URL.Path == basePath {
 		w.Header().Set("Content-Type", "application/json")
 		println(r.Method + " request to " + r.URL.Path)
+
+		if basePath := "/shoes//shoes_sub/"; strings.Contains(r.URL.Path, basePath) {
+			w.Header().Set("Content-Type", "application/json")
+			println(r.Method + " request to " + r.URL.Path)
+
+			tools.ShortenPath(basePath, r)
+			HandleShoes(w, r)
+			return
+		}
+
+		tools.ShortenPath(basePath, r)
 		HandleShoes(w, r)
 		return
 	}
